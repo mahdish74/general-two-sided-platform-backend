@@ -1,0 +1,16 @@
+# src/main/resources/application.yml
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/twosided
+    username: youruser
+    password: yourpassword
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  jackson:
+    serialization:
+      INDENT_OUTPUT: true
