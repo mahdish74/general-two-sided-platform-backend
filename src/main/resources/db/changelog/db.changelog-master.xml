@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.23.xsd">
+
+    <!-- ChangeSet 1: Create 'users' table -->
+    <changeSet id="1" author="mehdi">
+        <createTable tableName="users">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="full_name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- ChangeSet 2: Create 'laundry_requests' table -->
+    <changeSet id="2" author="mehdi">
+        <createTable tableName="laundry_requests">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="customer_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="VARCHAR(255)"/>
+            <column name="special_instructions" type="VARCHAR(255)"/>
+            <column name="preferred_pickup_time" type="TIMESTAMP"/>
+            <column name="status" type="VARCHAR(50)"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="laundry_requests"
+                                 baseColumnNames="customer_id"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_laundry_requests_customer"/>
+    </changeSet>
+
+    <!-- ChangeSet 3: Create 'laundry_jobs' table -->
+    <changeSet id="3" author="mehdi">
+        <createTable tableName="laundry_jobs">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="request_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="worker_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pickup_time" type="TIMESTAMP"/>
+            <column name="dropoff_time" type="TIMESTAMP"/>
+            <column name="paid" type="BOOLEAN"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="laundry_jobs"
+                                 baseColumnNames="request_id"
+                                 referencedTableName="laundry_requests"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_laundry_jobs_request"/>
+
+        <addForeignKeyConstraint baseTableName="laundry_jobs"
+                                 baseColumnNames="worker_id"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_laundry_jobs_worker"/>
+    </changeSet>
+
+</databaseChangeLog>

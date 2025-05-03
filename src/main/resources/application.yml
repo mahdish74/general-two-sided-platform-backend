@@ -3,10 +3,12 @@ server:
   port: 8080
 
 spring:
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.xml
   datasource:
-    url: jdbc:postgresql://localhost:5432/twosided
-    username: youruser
-    password: yourpassword
+    url: jdbc:postgresql://localhost:5432/two_sided_platform
+    username: admin
+    password: admin123
   jpa:
     hibernate:
       ddl-auto: update
@@ -14,3 +16,20 @@ spring:
   jackson:
     serialization:
       INDENT_OUTPUT: true
+    date-format: yyyy-MM-dd'T'HH:mm:ss
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+logging:
+
+  level:
+    root: INFO
+    com.mehdi.twosidedplatform: DEBUG  # More detailed logs for your code
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg%n"
+  file:
+    name: logs/app.log

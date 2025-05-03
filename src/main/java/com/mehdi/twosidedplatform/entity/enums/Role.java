@@ -1,4 +1,4 @@
-package com.mehdi.twosidedplatform.entity;
+package com.mehdi.twosidedplatform.entity.enums;
 
 public enum Role {
     CUSTOMER,
