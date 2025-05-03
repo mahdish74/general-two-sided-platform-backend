@@ -1,5 +1,6 @@
 package com.mehdi.twosidedplatform.exception;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @RestControllerAdvice
+@Hidden
 public class GlobalExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
